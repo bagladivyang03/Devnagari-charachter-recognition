@@ -45,11 +45,12 @@ def predict(request):
     print(model, "model")
     print(graph, "graph")
     out = model.predict(x)
-    print(out)
-    print(np.argmax(out, axis=1))
-    response = np.array_str(np.argmax(out, axis=1))
-    return JsonResponse({"output": response})
+    # print(out)
+    # print(np.argmax(out, axis=1))
+    response = np.array(np.argmax(out, axis=1))
+    print(response , "response")
+    return JsonResponse({"output": str(response[0]) })
 
 
 def index(request):
-    return render(request, 'index.html', {})
+    return render(request, 'index.html', { "imagestr" : "static/hindi_characters/1.png"})

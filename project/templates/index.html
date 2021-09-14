@@ -1,3 +1,5 @@
+{% load static %}
+   
 <html>
   <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
@@ -125,15 +127,17 @@
   </head>
 
   <body onload="init()">
-    <div class="text-center grid-col-1 p-8 text-4xl font-semibold bg-blue-500">
+    <div class="text-center grid-col-1 p-8 text-4xl text-white font-semibold bg-blue-500">
       Devnagari character Learning tool
     </div>
+     <img id="image_url" src="static/hindi_characters/1.png" width="300" height="300" alt="My image"/>
+     <button onclick="changeimage()" type="button">Click Me!</button>
     <div class="" id="sketchpadapp">
         <div class="mx-72 py-4 px-72 text-center" >
             <canvas id="sketchpad" height="300" width="300"> </canvas>
         </div>
       <div class="mx-72 py-4 px-72 ">
-        <p id="result" class=""></p>
+        <img id="result" src="" width="32" height="32" alt="My image"/>
         <a href="#" class="ml-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" id="predictButton">
           Predict
         </a>
@@ -148,6 +152,20 @@
     </div>
   </body>
   <script type="text/javascript">
+  $("#result").hide();
+  function changeimage(){
+    var img = document.getElementById("image_url");
+    var img_data_url = img.getAttribute("src")
+    var img_data_number = img_data_url.split("/")[2].split(".")[0]
+    if(parseInt(img_data_number)+1 == 37){
+      var img_no = img.getAttribute("src").substring(0,24) + "1" + ".png"
+    }
+    else{
+    var img_no = img.getAttribute("src").substring(0,24) + (parseInt(img_data_number)+1).toString() + ".png"
+    }
+    document.getElementById("image_url").src = img_no
+    console.log("Hello")
+  }
     $("#predictButton").click(function () {
       console.log("Hello");
       var $SCRIPT_ROOT = "/api/predict/";
@@ -159,7 +177,22 @@
         url: $SCRIPT_ROOT,
         data: { img: img },
         success: function (data) {
-          $("#result").text("Predicted Output is: " + data.output);
+         
+          var img = document.getElementById("image_url");
+          var img_data_url = img.getAttribute("src")
+          var img_data_number = img_data_url.split("/")[2].split(".")[0]
+          console.log(img_data_number)
+          console.log(data.output)
+          if(parseInt(data.output) == parseInt(img_data_number)){
+              
+            document.getElementById("result").src = "static/images/checked.png";
+            $("#result").show()
+          }
+          else{
+            document.getElementById("result").src = "static/images/failure.png";
+            $("#result").show()
+          }
+          
           context.clearRect(0, 0, 300, 300);
           context.fillStyle = "black";
           context.fillRect(0, 0, canvas.width, canvas.height);
