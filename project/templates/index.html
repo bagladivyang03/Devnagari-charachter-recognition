@@ -128,9 +128,44 @@
 
   <body onload="init()">
     <div class="text-center grid-col-1 p-8 text-4xl text-white font-semibold bg-blue-500">
-      Devnagari character Learning tool
+      Devnagari Character Learning Tool
     </div>
-     <img id="image_url" src="static/hindi_characters/1.png" width="300" height="300" alt="My image"/>
+    <div class=" grid grid-cols-4 m-16">
+      <div class="grid-col-1"></div>
+      <div class="grid-col-1 text-center">
+        <img class="border-2" id="image_url" src="static/hindi_characters/1.png" width="300" height="300" alt="My image"/>
+        <input
+          class="mr-12 my-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          type="submit"
+          value="Next"
+          onclick="changeimage()"
+        />
+      </div>
+      <div class="grid-col-1">
+            <div class="" id="sketchpadapp">
+        <div class=" text-center" >
+            <canvas id="sketchpad" height="300" width="300"> </canvas>
+        </div>
+      <div class=" ">
+        <a href="#" class="ml-6 my-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" id="predictButton">
+          Predict
+        </a>
+        <input
+            class="my-4 ml-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          type="submit"
+          value="Clear Sketchpad"
+          onclick="clearCanvas(canvas,ctx);"
+        />
+      </div>
+      
+    </div>
+      </div>
+      <div class="grid-col-1"></div>
+    </div>
+    <div class="block m-auto w-20 text-center">
+      <img class="text-center" id="result" src="" width="128" height="128" alt="My image"/>
+    </div>
+     {% comment %} <img id="image_url" src="static/hindi_characters/1.png" width="300" height="300" alt="My image"/>
      <button onclick="changeimage()" type="button">Click Me!</button>
     <div class="" id="sketchpadapp">
         <div class="mx-72 py-4 px-72 text-center" >
@@ -149,7 +184,7 @@
         />
       </div>
       
-    </div>
+    </div> {% endcomment %}
   </body>
   <script type="text/javascript">
   $("#result").hide();
@@ -187,6 +222,9 @@
               
             document.getElementById("result").src = "static/images/checked.png";
             $("#result").show()
+          }
+          else if(parseInt(data.output) == 45){
+              $("#result").hide()
           }
           else{
             document.getElementById("result").src = "static/images/failure.png";
