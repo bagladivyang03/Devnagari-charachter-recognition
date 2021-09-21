@@ -194,13 +194,18 @@
     var img_data_number = img_data_url.split("/")[2].split(".")[0]
     if(parseInt(img_data_number)+1 == 37){
       var img_no = img.getAttribute("src").substring(0,24) + "1" + ".png"
+      var character = new Audio('static/Audio/'+1+'.mp3');
+      character.play();
     }
     else{
-    var img_no = img.getAttribute("src").substring(0,24) + (parseInt(img_data_number)+1).toString() + ".png"
+      var img_no = img.getAttribute("src").substring(0,24) + (parseInt(img_data_number)+1).toString() + ".png"
     }
     document.getElementById("image_url").src = img_no
+    var character = new Audio('static/Audio/'+(parseInt(img_data_number)+1)+'.mp3');
+    character.play();
     console.log("Hello")
   }
+
     $("#predictButton").click(function () {
       console.log("Hello");
       var $SCRIPT_ROOT = "/api/predict/";
@@ -219,7 +224,8 @@
           console.log(img_data_number)
           console.log(data.output)
           if(parseInt(data.output) == parseInt(img_data_number)){
-              
+            var answer = new Audio('static/Audio/sahi jawab.mp3');
+            answer.play();
             document.getElementById("result").src = "static/images/checked.png";
             $("#result").show()
           }
@@ -227,6 +233,8 @@
               $("#result").hide()
           }
           else{
+            var answer = new Audio('static/Audio/galat uttar.mp3');
+            answer.play();
             document.getElementById("result").src = "static/images/failure.png";
             $("#result").show()
           }
